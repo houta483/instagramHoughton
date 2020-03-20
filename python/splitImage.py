@@ -2,9 +2,10 @@ from PIL import Image
 from datetime import datetime
 
 def createSubImages(picture):
-  
+  # open the image
   im = Image.open(picture)
 
+  # measurements for each subpricture
   boxes = {
     'one': {
       'left': 5,
@@ -56,10 +57,12 @@ def createSubImages(picture):
     }
   }
 
+  # loop through the boxes dictionary
   for x in range(len(boxes)):
+    # get the key of each entry in the dictionary
     key = (list(boxes.keys())[x])
+    #  create a new image, called "croppedImg" for each entry in the boxes dictionary
     croppedImg = im.crop((boxes[f"{key}"]['left'], boxes[f"{key}"]['top'],
              boxes[f"{key}"]['right'], boxes[f"{key}"]['bottom']))
+    # save the cropped picture under the following dynamic name
     croppedImg.save(f"/Users/Tanner/code/products/Instagram/croppedImages/{key}.jpg")
-
-createSubImages("/Users/Tanner/code/products/Instagram/uncroppedImages/insta.jpg")
