@@ -1,9 +1,18 @@
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
+# import pymongo
+# from pymongo import MongoClient
+import pandas as pd
 
-# Use a service account
-cred = credentials.Certificate('path/to/serviceAccount.json')
-firebase_admin.initialize_app(cred)
+# cluster = MongoClient("mongodb+srv://houta483:Pitbull92929@instagram-42vnx.mongodb.net/test?retryWrites=true&w=majority")
+# db = cluster['Instagram']
+# collection = db['InstagramHoughton']
+# post = {
+#   'test': 'First test',
+#   'secondTest': 'second test'
+# }
+# collection.insert_one(post)
 
-db = firestore.client()
+def inputData(name, comment):
+  data = pd.DataFrame({"instagramUsers": [name], 'Comments': [comment]})
+  datatoexcel = pd.ExcelWriter("InstagramData.xlsx", engine="xlsxwriter")
+  data.to_excel(datatoexcel, sheet_name="sheet1")
+  datatoexcel.save()
