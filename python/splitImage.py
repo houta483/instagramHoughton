@@ -1,68 +1,27 @@
 from PIL import Image
-from datetime import datetime
+import uuid
 
 def createSubImages(picture):
-  # open the image
   im = Image.open(picture)
+  
+  leftSide = im.crop((0, 180, im.width / 2, (im.height - (.1 * im.height))))
+  leftTop = leftSide.crop((0, 0, leftSide.width, leftSide.height / 4))
+  leftUpper = leftSide.crop((0, leftSide.height / 4, leftSide.width, (2 * leftSide.height / 4)))
+  leftLower = leftSide.crop((0, (leftSide.height / 2), leftSide.width, (3 * leftSide.height / 4)))
+  leftBottom = leftSide.crop((0, (leftSide.height - (.97 * (leftSide.height / 4))), leftSide.width, (leftSide.height)))
 
-  # measurements for each subpricture
-  boxes = {
-    'one': {
-      'left': 5,
-      'top': 120,
-      'right': 280,
-      'bottom': 320
-    },
-    'two': {
-        'left': 280,
-        'top': 120,
-        'right': 540,
-        'bottom': 320
-    },
-    'three': {
-        'left': 5,
-        'top': 400,
-        'right': 280,
-        'bottom': 600
-    },
-    'four': {
-        'left': 280,
-        'top': 400,
-        'right': 540,
-        'bottom': 600
-    },
-    'five': {
-        'left': 5,
-        'top': 650,
-        'right': 280,
-        'bottom': 830
-    },
-    'six': {
-        'left': 280,
-        'top': 650,
-        'right': 540,
-        'bottom': 830
-    },
-    'seven': {
-        'left': 5,
-        'top': 920,
-        'right': 280,
-        'bottom': 1120
-    },
-    'eight': {
-        'left': 280,
-        'top': 920,
-        'right': 540,
-        'bottom': 1120
-    }
-  }
+  rightSide = im.crop((im.width / 2, 180, im.width, im.height - (.1 * im.height)))
+  rightTop = rightSide.crop((0, 0, rightSide.width, rightSide.height / 4))
+  rightUpper = rightSide.crop((0, rightSide.height / 4, rightSide.width, (2 * rightSide.height / 4)))
+  rightLower = rightSide.crop((0, (rightSide.height / 2), rightSide.width, (3 * rightSide.height / 4)))
+  rightBottom = rightSide.crop((0, (rightSide.height - (.97 * (rightSide.height / 4))), rightSide.width, (rightSide.height)))
 
-  # loop through the boxes dictionary
-  for x in range(len(boxes)):
-    # get the key of each entry in the dictionary
-    key = (list(boxes.keys())[x])
-    #  create a new image, called "croppedImg" for each entry in the boxes dictionary
-    croppedImg = im.crop((boxes[f"{key}"]['left'], boxes[f"{key}"]['top'],
-             boxes[f"{key}"]['right'], boxes[f"{key}"]['bottom']))
-    # save the cropped picture under the following dynamic name
-    croppedImg.save(f"/Users/Tanner/code/products/Instagram/croppedImages/{key}.jpg")
+  leftTop.save(f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+  leftUpper.save(f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+  leftLower.save(f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+  leftBottom.save(f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+
+  rightTop.save(f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+  rightUpper.save(f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+  rightLower.save(f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+  rightBottom.save(f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")

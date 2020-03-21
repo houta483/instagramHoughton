@@ -13,12 +13,9 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'../APIKey.json'
 
 client = vision.ImageAnnotatorClient()
 
-# loop through the incropped images folder running create subumages on each
-for filepath in glob.iglob('/Users/Tanner/code/products/Instagram/uncroppedImages/*'):
-  file_name = os.path.abspath(f"{filepath}")
-  with io.open(file_name, 'rb') as image_file:
-    createSubImages(f"{image_file}")
-
+for filename in os.listdir('/Users/Tanner/code/products/Instagram/uncroppedImages'):
+  image_file = os.path.join('/Users/Tanner/code/products/Instagram/uncroppedImages', filename)
+  createSubImages(f"{image_file}")
 
 def populate():
   for filepath in glob.iglob('/Users/Tanner/code/products/Instagram/croppedImages/*'):
@@ -38,4 +35,4 @@ def populate():
       
       populateDatabase(username, 'Add Question', newText)
 
-# populate()
+populate()
