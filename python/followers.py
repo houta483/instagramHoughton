@@ -55,5 +55,5 @@ def setFollowersVariableAndSaveToExcel():
   df.to_excel(datatoexcel, sheet_name="sheet1")
   datatoexcel.save()
 
-copyAndPasteFollowers()
-setFollowersVariableAndSaveToExcel()
+# copyAndPasteFollowers()
+# setFollowersVariableAndSaveToExcel()
