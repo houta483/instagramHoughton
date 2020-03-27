@@ -28,7 +28,6 @@ def populate():
       username = text[0].description.split('\n')[0]
       textBody = text[0].description.split('\n')[1:]
       newText = str("".join(textBody))
-      # print(newText)
 
       if (os.path.exists('../database/InstagramData.xlsx') == False):
         createDatabase()

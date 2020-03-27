@@ -17,7 +17,6 @@ def populateDatabase(name, stickerQuestion, response):
   foundIGHandle = df[df['IG Handle'].str.contains(name)]
   IGHandlecount = foundIGHandle.count()[-1]
 
-  # if (IGHandlecount == 0):
   df2 = pd.DataFrame({"IG Handle": [f"@{name}"], 'Date Started Following': ['-'], 'First Name': ['-'],
                     'Last Name': ['-'], 'Home State': ['-'], 'Home City': ['-'], 'Aprx Household Income': ['-'],
                     'Date of Last Story View': ['-'], 'Date of Last Story Engagement': ['-'], '# of Story Engagements': ['-'],

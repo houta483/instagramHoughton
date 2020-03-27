@@ -7,8 +7,9 @@ import tkinter as tk
 import math
 from datetime import datetime
 from dateutil.parser import parse
+import os
 
-with open('/Users/Tanner/Downloads/data.json') as f:
+with open('/Users/Tanner/code/products/Instagram/data.json') as f:
   data = json.load(f)
 
 rawFollowers = data['followers']
@@ -35,23 +36,41 @@ prettyFollowers = json.dumps(rawWhitelistedForSponsorTaggingBy, indent=4)
 rawDismissedSuggestedUSers = data['dismissed_suggested_users']
 prettyFollowers = json.dumps(rawDismissedSuggestedUSers, indent=4)
 
-df = pd.DataFrame({"IG Handle": ["---"], 'Date Started Following': ['-'], 'First Name': ['-'],
-                   'Last Name': ['-'], 'Home State': ['-'], 'Home City': ['-'], 'Aprx Household Income': ['-'],
-                    'Date of Last Story View': ['-'], 'Date of Last Story Engagement': ['-'], '# of Story Engagements': ['-'],
-                    '# of Story Swipe Ups': ['-'], 'Date of Last Post Engagement': ['-'], '# of Post Engagements': ['-'],
-                    '# Post Likes': ['-'], '# of Post Comments': ['-'], 'Response to Story Question Stickers': ['->']})
+def createDatabaseAndPopulateWithFollowersDateAndTime():
+  df = pd.DataFrame({"IG Handle": ["---"], 'Date Started Following': ['-'], 'Time Started Following': ['-'], 'First Name': ['-'],
+                    'Last Name': ['-'], 'Home State': ['-'], 'Home City': ['-'], 'Aprx Household Income': ['-'],
+                      'Date of Last Story View': ['-'], 'Date of Last Story Engagement': ['-'], '# of Story Engagements': ['-'],
+                      '# of Story Swipe Ups': ['-'], 'Date of Last Post Engagement': ['-'], '# of Post Engagements': ['-'],
+                      '# Post Likes': ['-'], '# of Post Comments': ['-'], 'Response to Story Question Stickers': ['->']})
 
-for index, follower in enumerate(rawFollowers):
-  df1 = pd.DataFrame({
-    "IG Handle": [follower[0]],
-    'Date Started Following': ['-']
-    })
-  df = df.append(df1, ignore_index=True)
-  print(index)
+  count = 0
 
-datatoexcel = pd.ExcelWriter(
-    "./Users/Tanner/Downloads/InstagramFollowerData.xlsx", engine="xlsxwriter")
-df.to_excel(datatoexcel, sheet_name="sheet1")
-datatoexcel.save()
+  for index in enumerate(rawFollowers.items()):
+    if (count == 100):
+      break
 
-# parse(follower[1]).date()
+    count = count + 1
+    print(count)
+
+    dateTime = str(index[1][1])
+    date = dateTime.split("T")[0]
+    date = date.split('-')
+    date = f"{date[1]}-{date[2]}-{date[0]}"
+    finalDate = datetime.strptime(date, '%m-%d-%Y').date()
+
+    time = dateTime.split("T")[1]
+    finalTime = time.split("+")[0]
+
+    df1 = pd.DataFrame({
+      "IG Handle": [index[1][0]],
+      'Date Started Following': [finalDate],
+      'Time Started Following': [finalTime]
+      })
+    df = df.append(df1, ignore_index=True)
+
+    datatoexcel = pd.ExcelWriter("/Users/Tanner/code/products/Instagram/database/InstagramFollowerData.xlsx", engine="xlsxwriter")
+    df.to_excel(datatoexcel, sheet_name="sheet1")
+    datatoexcel.save()
+
+if (os.path.exists('/Users/Tanner/code/products/Instagram/database/InstagramFollowerData.xlsx') == False):
+  createDatabaseAndPopulateWithFollowersDateAndTime()
