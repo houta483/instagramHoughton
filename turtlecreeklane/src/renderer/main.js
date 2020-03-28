@@ -1,5 +1,5 @@
-import Vue from "vue";
-import App from "./App.vue";
+import Vue from 'vue'
+import App from './App'
 import Vuex from "vuex"
 
 Vue.use(Vuex)
@@ -14,12 +14,9 @@ const store = new Vuex.Store({
   }
 });
 
+/* eslint-disable no-new */
 new Vue({
   store,
-  watch: {
-    followers() {
-      return this.$store.state.followers
-    }
-  },
-  render: h => h(App)
-}).$mount("#app");
+  components: { App },
+  template: '<App/>'
+}).$mount('#app')

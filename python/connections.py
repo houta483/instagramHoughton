@@ -44,10 +44,7 @@ def createDatabaseAndPopulateWithFollowersDateAndTime():
                       '# Post Likes': ['-'], '# of Post Comments': ['-'], 'Response to Story Question Stickers': ['->']})
 
   count = 0
-
   for index in enumerate(rawFollowers.items()):
-    if (count == 100):
-      break
 
     count = count + 1
     print(count)

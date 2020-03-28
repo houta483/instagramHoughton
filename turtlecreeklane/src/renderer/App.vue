@@ -7,16 +7,16 @@
 </template>
 
 <script>
-import Main from "./components/Main.vue";
-import Header from "./components/Header.vue"
-import Navbar from "./components/Navbar.vue"
+  import Navbar from '@/components/Navbar.vue'
+  import Header from '@/components/Header.vue'
+  import Main from '@/components/Main.vue'
 
-export default {
-  name: "App",
-  components: {
-    Main, Header, Navbar
+  export default {
+    name: 'turtlecreeklane',
+    components: {
+      Navbar, Header, Main
+    }
   }
-};
 </script>
 
 <style>
@@ -44,7 +44,7 @@ export default {
   grid-column: 1 / 3;
   grid-row: 1 / 1;
   border-bottom: .5px solid gray;
-  padding-top: 15px;
+  padding-top: 25px;
 }
 
 .navbar {
@@ -52,5 +52,7 @@ export default {
   grid-column: 1 / 1;
   grid-row: 2 / 3;
   border-right: .5px solid gray;
+  margin-right: -50px;
+  margin-left: -50px;
 }
 </style>
