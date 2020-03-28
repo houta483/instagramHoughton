@@ -14,6 +14,7 @@
     "fetch": "^1.1.0",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.2",
+    "python-shell": "^1.0.8",
     "whatwg-fetch": "^3.0.0"
   }
 }
