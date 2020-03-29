@@ -18,5 +18,5 @@ def submit():
       createDatabaseAndPopulateWithFollowersDateAndTime(saved_name)
     else:
       print("file not present")
-  print("sucess...............................")
+  print("sucess")
   return jsonify(status='200')

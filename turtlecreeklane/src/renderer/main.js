@@ -11,6 +11,8 @@ const store = new Vuex.Store({
     followers: true,
     storyEngagement: false,
     stickerResponses: false,
+    filesProcessed: 0,
+    showFilesProcessed: false,
   }
 });
 

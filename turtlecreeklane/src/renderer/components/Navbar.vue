@@ -33,14 +33,10 @@ export default {
       this.$store.state[secondaryId] = false;
       this.$store.state[tertiaryId] = false;
       this.$store.state[primaryId] = false;
-
       this.$store.state[primaryId] = this.$store.state[primaryId] === true ? false : true;
-
       document.getElementById(primaryId).style.textDecoration = this.$store.state[primaryId] === true ? "underline" : 'none';
       document.getElementById(secondaryId).style.textDecoration = this.$store.state[secondaryId] === true ? "underline" : 'none';
       document.getElementById(tertiaryId).style.textDecoration = this.$store.state[tertiaryId] === true ? "underline" : 'none';
-
-      console.log(this.$store.state)
     }
   }
 };

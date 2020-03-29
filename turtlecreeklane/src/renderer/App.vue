@@ -31,6 +31,7 @@
   grid-template-columns: 20% 80%;
   grid-template-rows: 20% 80%;
   height: 800px;
+  min-width: 770px;
 }
 
 .main {
@@ -50,7 +51,7 @@
 .navbar {
   display: grid;
   grid-column: 1 / 1;
-  grid-row: 2 / 3;
+  grid-row: 2 / 4;
   border-right: .5px solid gray;
   margin-right: -50px;
   margin-left: -50px;
