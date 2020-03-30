@@ -34,4 +34,6 @@ def populate():
       
       populateDatabase(username, 'Add Question', newText)
 
-populate()
+
+if __name__ == "__main__":
+  populate()

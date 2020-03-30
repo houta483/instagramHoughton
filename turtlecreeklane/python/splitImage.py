@@ -25,3 +25,6 @@ def createSubImages(picture):
   rightUpper.save(f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
   rightLower.save(f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
   rightBottom.save(f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+
+if __name__ == "__main__":
+  createSubImages()
