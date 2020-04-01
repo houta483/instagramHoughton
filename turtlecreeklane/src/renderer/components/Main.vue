@@ -15,7 +15,7 @@
   <div class='parent' v-else-if="this.$store.state.stickerResponses === true">
     <p class='selectData'> Please select the screenshots containing your sticker response data </p>
     <input class='file' id="file" ref="file" type="file" v-on:change="handleFile('stickers')" multiple />
-    <button class='runPythonButton'> Analyze Sticker Responses </button>
+    <button class='runPythonButton' @click="sticker"> Analyze Sticker Responses </button>
   </div>
 
 </template>
@@ -54,6 +54,18 @@ export default {
             'Content-type': 'multipart/form-data'
           }
         } 
+      )
+      .then((data) => console.log(data))
+      .catch((e) => console.log(e))
+    },
+    sticker () {
+      axios.post(
+        'http://localhost:5000/stickers/',
+        {
+          headers: {
+            'Content-type': 'multipart/form-data'
+          }
+        }
       )
       .then((data) => console.log(data))
       .catch((e) => console.log(e))
