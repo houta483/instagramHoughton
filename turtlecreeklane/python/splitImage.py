@@ -1,5 +1,6 @@
 from PIL import Image
 import uuid
+import os
 
 def createSubImages(picture):
   im = Image.open(picture)

@@ -36,7 +36,6 @@ prettyFollowers = json.dumps(rawWhitelistedForSponsorTaggingBy, indent=4)
 rawDismissedSuggestedUSers = data['dismissed_suggested_users']
 prettyFollowers = json.dumps(rawDismissedSuggestedUSers, indent=4)
 
-
 def createDatabaseAndPopulateWithFollowersDateAndTime(json_file='/Users/Tanner/code/products/Instagram/data.json'):
   with open(json_file) as f:
     data = json.load(f)

@@ -9,16 +9,17 @@ from splitImage import createSubImages
 from google.cloud import vision
 from google.cloud.vision import types
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'../APIKey.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'./APIKey.json'
 
 client = vision.ImageAnnotatorClient()
 
-for filename in os.listdir('/Users/Tanner/code/products/Instagram/uncroppedImages'):
-  image_file = os.path.join('/Users/Tanner/code/products/Instagram/uncroppedImages', filename)
-  createSubImages(f"{image_file}")
 
 def populate():
+  count = 0
+
   for filepath in glob.iglob('/Users/Tanner/code/products/Instagram/croppedImages/*'):
+    count = count + 1
+    print(count)
     file_name = os.path.abspath(f"{filepath}")
     with io.open(file_name, 'rb') as image_file:
       content = image_file.read()
@@ -28,12 +29,15 @@ def populate():
       username = text[0].description.split('\n')[0]
       textBody = text[0].description.split('\n')[1:]
       newText = str("".join(textBody))
+      newTextWithoutReply = newText.split('Reply')[0]
 
-      if (os.path.exists('../database/InstagramData.xlsx') == False):
+      if (os.path.exists('/Users/Tanner/code/products/Instagram/database/InstagramStickerResponseData.xlsx') == False):
         createDatabase()
-      
+        print('the database exists')
       populateDatabase(username, 'Add Question', newText)
 
+for filename in os.listdir('/Users/Tanner/code/products/Instagram/uncroppedImages'):
+  image_file = os.path.join('/Users/Tanner/code/products/Instagram/uncroppedImages', filename)
+  createSubImages(f"{image_file}")
 
-if __name__ == "__main__":
-  populate()
+populate()
