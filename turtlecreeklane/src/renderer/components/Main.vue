@@ -77,7 +77,6 @@ export default {
       }
       else if (type === 'stickers') {
         this.file = this.$refs.file.files;
-        // console.log(this.file)
       }
     },
     async myMethod () {
@@ -111,15 +110,14 @@ export default {
       let form_data =  new FormData();
       this.rendering = true
 
+      // console.log(document.getElementById('file').files)
+
       for (let i = 0; i < this.file.length; i++) {
-        console.log(this.file[i].name)
-        console.log(this.file[i])
-        form_data.append(this.file[i].name, this.file[i])
-      }
+        form_data.append('file', this.file[i])
+        }
 
+      console.log(form_data)
       this.numberOfPictures = this.file.length
-
-      await console.log(form_data)
 
       await axios.post(
         'http://localhost:5000/stickers/',

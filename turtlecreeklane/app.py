@@ -25,9 +25,15 @@ def submit():
 @app.route('/stickers/', methods=["POST"])
 def stickers():
   if request.method == "POST":
-    if 'file' in request.files:
-      json_file = request.files['file']
-    # prepareToRun()
+    uploads = request.files.getlist('file')
+    print(uploads)
+    if uploads:
+      for (index, pic) in enumerate(uploads):
+        saved_name = os.path.join(
+          "/Users/Tanner/code/products/Instagram/uncroppedImages/", str(pic.filename)
+        )
+        pic.save(saved_name)
+    prepareToRun()
   else:
     print('file not present')
     
