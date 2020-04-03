@@ -7,16 +7,16 @@
         Followers
       </li>
 
-      <li @click="underline('storyEngagement', 'followers', 'stickerResponses')"
-          id='storyEngagement'
-      >
-        Story Engagement
-      </li>
-
       <li @click="underline('stickerResponses', 'storyEngagement', 'followers')"
           id='stickerResponses'
       >
         Sticker Responses
+      </li>
+
+      <li @click="underline('storyEngagement', 'followers', 'stickerResponses')"
+          id='storyEngagement'
+      >
+        Story Engagement
       </li>
     </ul>
   </div>

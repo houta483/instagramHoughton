@@ -54,7 +54,7 @@ def createDatabaseAndPopulateWithFollowersDateAndTime(json_file='/Users/Tanner/c
     count = count + 1
     print(count)
 
-    if (count == 10):
+    if (count == 100):
       break
 
     dateTime = str(index[1][1])

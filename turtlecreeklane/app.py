@@ -25,7 +25,9 @@ def submit():
 @app.route('/stickers/', methods=["POST"])
 def stickers():
   if request.method == "POST":
-    prepareToRun()
+    if 'file' in request.files:
+      json_file = request.files['file']
+    # prepareToRun()
   else:
     print('file not present')
     
