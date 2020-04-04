@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from python.connections import createDatabaseAndPopulateWithFollowersDateAndTime
 from python.main import prepareToRun
+from PIL import Image
 
 app = Flask(__name__)
 CORS(app)
@@ -24,15 +25,19 @@ def submit():
 
 @app.route('/stickers/', methods=["POST"])
 def stickers():
-  if request.method == "POST":
+  if (request.method == "POST" and request.files.getlist('file')):
     uploads = request.files.getlist('file')
-    print(uploads)
-    if uploads:
-      for (index, pic) in enumerate(uploads):
-        saved_name = os.path.join(
-          "/Users/Tanner/code/products/Instagram/uncroppedImages/", str(pic.filename)
-        )
-        pic.save(saved_name)
+    print(request.files)
+
+    for pic in uploads:
+      filename = pic.filename.split(".")[0] + '.jpg'
+      saved_name = os.path.join("/Users/Tanner/code/products/Instagram/uncroppedImages/", filename)
+      pic.save(saved_name)
+
+      image = Image.open(saved_name)
+      rgb_im = image.convert('RGB')
+      rgb_im.save(saved_name)
+
     prepareToRun()
   else:
     print('file not present')

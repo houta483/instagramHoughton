@@ -1,11 +1,12 @@
+import os
+import uuid
+from PIL import Image
 import io
 import os, os.path
 import json
 import glob
 import pandas as pd
 
-from python.database import createDatabase, populateDatabase
-from python.splitImage import createSubImages
 from google.cloud import vision
 from google.cloud.vision import types
 
@@ -13,6 +14,77 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'./python/APIKey.json'
 
 client = vision.ImageAnnotatorClient()
 
+def createDatabase():
+  df = pd.DataFrame({"IG Handle": ["@"], 'Date Started Following': ['-'], 'First Name': ['-'],
+                     'Last Name': ['-'], 'Home State': ['-'], 'Home City': ['-'], 'Aprx Household Income': ['-'],
+                     'Date of Last Story View': ['-'], 'Date of Last Story Engagement': ['-'], '# of Story Engagements': ['-'],
+                     '# of Story Swipe Ups': ['-'], 'Date of Last Post Engagement': ['-'], '# of Post Engagements': ['-'],
+                     '# Post Likes': ['-'], '# of Post Comments': ['-'], 'Response to Story Question Stickers': ['See Following columns']
+                     })
+  datatoexcel = pd.ExcelWriter(
+      "/Users/Tanner/code/products/Instagram/database/InstagramStickerResponseData.xlsx", engine="xlsxwriter")
+  df.to_excel(datatoexcel, sheet_name="sheet1")
+  datatoexcel.save()
+
+def populateDatabase(name, stickerQuestion, response):
+  df = pd.read_excel(
+      '/Users/Tanner/code/products/Instagram/database/InstagramStickerResponseData.xlsx', index_col=[0])
+
+  foundIGHandle = df[df['IG Handle'].str.contains(name)]
+  IGHandlecount = foundIGHandle.count()[-1]
+
+  df2 = pd.DataFrame({"IG Handle": [f"@{name}"], 'Date Started Following': ['-'], 'First Name': ['-'],
+                      'Last Name': ['-'], 'Home State': ['-'], 'Home City': ['-'], 'Aprx Household Income': ['-'],
+                      'Date of Last Story View': ['-'], 'Date of Last Story Engagement': ['-'], '# of Story Engagements': ['-'],
+                      '# of Story Swipe Ups': ['-'], 'Date of Last Post Engagement': ['-'], '# of Post Engagements': ['-'],
+                      '# Post Likes': ['-'], '# of Post Comments': ['-'], 'Response to Story Question Stickers': ['->']})
+  df2[stickerQuestion] = response
+  df = df.append(df2, ignore_index=True)
+
+  datatoexcel = pd.ExcelWriter(
+      "/Users/Tanner/code/products/Instagram/database/InstagramStickerResponseData.xlsx", engine="xlsxwriter")
+  df.to_excel(datatoexcel, sheet_name="sheet1")
+  datatoexcel.save()
+
+def createSubImages(picture):
+  im = Image.open(picture)
+
+  leftSide = im.crop((0, 180, im.width / 2, (im.height - (.1 * im.height))))
+  leftTop = leftSide.crop((0, 0, leftSide.width, leftSide.height / 4))
+  leftUpper = leftSide.crop(
+      (0, leftSide.height / 4, leftSide.width, (2 * leftSide.height / 4)))
+  leftLower = leftSide.crop(
+      (0, (leftSide.height / 2), leftSide.width, (3 * leftSide.height / 4)))
+  leftBottom = leftSide.crop(
+      (0, (leftSide.height - (.97 * (leftSide.height / 4))), leftSide.width, (leftSide.height)))
+
+  rightSide = im.crop((im.width / 2, 180, im.width,
+                       im.height - (.1 * im.height)))
+  rightTop = rightSide.crop((0, 0, rightSide.width, rightSide.height / 4))
+  rightUpper = rightSide.crop(
+      (0, rightSide.height / 4, rightSide.width, (2 * rightSide.height / 4)))
+  rightLower = rightSide.crop(
+      (0, (rightSide.height / 2), rightSide.width, (3 * rightSide.height / 4)))
+  rightBottom = rightSide.crop(
+      (0, (rightSide.height - (.97 * (rightSide.height / 4))), rightSide.width, (rightSide.height)))
+
+  leftTop.save(
+      f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+  leftUpper.save(
+      f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+  leftLower.save(
+      f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+  leftBottom.save(
+      f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+
+  rightTop.save(
+      f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+  rightUpper.save(
+      f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+  rightLower.save(
+    f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+  rightBottom.save(
+    f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
 
 def populate():
   count = 0
@@ -45,5 +117,4 @@ def prepareToRun():
   for filename in os.listdir('/Users/Tanner/code/products/Instagram/uncroppedImages'):
     image_file = os.path.join('/Users/Tanner/code/products/Instagram/uncroppedImages', filename)
     createSubImages(f"{image_file}")
-  
   populate()

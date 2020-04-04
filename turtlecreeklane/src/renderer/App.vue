@@ -32,6 +32,7 @@
   grid-template-rows: 20% 80%;
   height: 800px;
   min-width: 770px;
+  border-bottom: .5px solid gray;
 }
 
 .main {
