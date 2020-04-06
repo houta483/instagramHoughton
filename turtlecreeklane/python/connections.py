@@ -1,13 +1,9 @@
-import json
-import pyautogui
+import json, pyautogui, re, math, os
 from random import randint
 import pandas as pd
-import re
 import tkinter as tk
-import math
 from datetime import datetime
 from dateutil.parser import parse
-import os
 
 with open('/Users/Tanner/code/products/Instagram/data.json') as f:
   data = json.load(f)

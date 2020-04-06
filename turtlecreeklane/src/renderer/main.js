@@ -8,8 +8,8 @@ Vue.config.productionTip = false
 
 const store = new Vuex.Store({
   state: {
-    followers: false,
-    stickerResponses: true,
+    followers: true,
+    stickerResponses: false,
     storyEngagement: false,
   }
 });

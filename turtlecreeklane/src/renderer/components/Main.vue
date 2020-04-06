@@ -2,7 +2,7 @@
   <div class='parent' v-if="this.$store.state.followers === true">
     <p class='selectData'> Please select the file containing your followers' data </p>
     <input style="padding-left: 20px" class='file' id="file" ref="file" type="file" v-on:change="handleFile('followers')"/>
-    <button style="padding-left: -20px" class='runPythonButton' @click="clearFile"> Clear File </button>
+    <button style="padding-left: -20px" class='runPythonButton' @click="clearFile('followers')"> Clear File </button>
 
     <br>
     <button 
@@ -23,7 +23,7 @@
   <div class='parent' v-else-if="this.$store.state.stickerResponses === true">
     <p class='selectData'> Please select the screenshots containing your sticker response data </p>
     <input class='file' id="file" ref="file" type="file" v-on:change="handleFile('stickers')" multiple />
-    <button class='runPythonButton' @click="clearFile"> Clear File </button>
+    <button class='runPythonButton' @click="clearFile('stickers')"> Clear File </button>
     <br>
     <button 
       @click="sticker"
@@ -36,7 +36,7 @@
     <div class='parent' style="{width: 100%;}">
       <div class="loader" v-if="this.rendering == true"></div>
     </div>
-    <p v-if="this.rendering == false && this.fileProcessed == true">Pictures Processed: {{this.numberOfPictures}}</p>
+    <p v-if="this.rendering == false && this.picsProcessed == true">Pictures Processed: {{this.numberOfPictures}}</p>
   </div>
 
   <div class='parent' v-else-if="this.$store.state.storyEngagement === true">
@@ -63,13 +63,22 @@ export default {
     return {
       rendering: false,
       fileProcessed: false,
+      picsProcessed: false,
       nameOfFile: '',
       numberOfPictures: 0,
     }
   },
   methods: {
-    clearFile () {
+    clearFile (file) {
       document.getElementById("file").value = ''
+
+      if (file === 'followers') {
+        this.fileProcessed = false
+      }
+
+      else if (file === 'stickers') {
+        this.picsProcessed = false
+      }
     },
     async handleFile(type){
       if (type === 'followers') {
@@ -84,9 +93,7 @@ export default {
       
       let form_data =  new FormData();
       form_data.append('file', this.file)
-      
-      console.log(form_data)
-      
+            
       await axios.post(
         'http://localhost:5000/submit/',
         form_data,
@@ -97,7 +104,6 @@ export default {
         } 
       )
       .then((data) => {
-        console.log(data)
         this.nameOfFile = this.file.name
         this.clearFile ()
         })
@@ -110,13 +116,10 @@ export default {
       let form_data =  new FormData();
       this.rendering = true
 
-      // console.log(document.getElementById('file').files)
-
       for (let i = 0; i < this.file.length; i++) {
         form_data.append('file', this.file[i])
         }
 
-      console.log(form_data)
       this.numberOfPictures = this.file.length
 
       await axios.post(
@@ -128,11 +131,14 @@ export default {
           }
         }
       )
-      .then((data) => console.log(data))
+      .then((data) => {
+        this.clearFile ()
+        console.log(data)
+      })
       .catch((e) => console.log(e))
 
       this.rendering = false
-      this.fileProcessed = true
+      this.picsProcessed = true
     }
   },
 };

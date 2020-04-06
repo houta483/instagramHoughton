@@ -1,9 +1,7 @@
-import pyautogui
+import pyautogui, re, math
 from random import randint
 import pandas as pd
-import re
 import tkinter as tk
-import math
 
 def makeAllDataAvaliable(numberOfFollowers):
   pyautogui.click(670, 460, button='left')

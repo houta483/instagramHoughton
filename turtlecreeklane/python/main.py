@@ -1,10 +1,5 @@
-import os
-import uuid
+import os, uuid, io, os, os.path, json, glob, shutil
 from PIL import Image
-import io
-import os, os.path
-import json
-import glob
 import pandas as pd
 
 from google.cloud import vision
@@ -113,8 +108,28 @@ def populate():
         print('the database exists')
       populateDatabase(username, 'Add Question', newTextWithoutReply)
 
+def clearCache(folder):
+  if (folder == "cropped"):
+    path = '/Users/Tanner/code/products/Instagram/croppedImages'
+  elif (folder == "uncropped"):
+    path = '/Users/Tanner/code/products/Instagram/uncroppedImages'
+    
+  for filename in os.listdir(path):
+    file_path = os.path.join(path, filename)
+    try:
+      if (os.path.isfile(file_path) or os.path.islink(file_path)):
+        os.unlink(file_path)
+      elif (os.path.isdir(file_path)):
+        shutil.rmtree(file_path)
+    except Exception as e:
+      print('Failed to delete %s. Reason: %s' % (file_path, e))
+
 def prepareToRun():
   for filename in os.listdir('/Users/Tanner/code/products/Instagram/uncroppedImages'):
     image_file = os.path.join('/Users/Tanner/code/products/Instagram/uncroppedImages', filename)
     createSubImages(f"{image_file}")
+  
   populate()
+  clearCache('cropped')
+  clearCache('uncropped')
+
