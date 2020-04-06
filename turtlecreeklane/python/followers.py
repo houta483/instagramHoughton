@@ -49,7 +49,7 @@ def setFollowersVariableAndSaveToExcel():
     df1 = pd.DataFrame({"IG Handle": [followers[index]]})
     df = df.append(df1, ignore_index=True)
 
-  datatoexcel = pd.ExcelWriter("../database/InstagramFollowerData.xlsx", engine="xlsxwriter")
+  datatoexcel = pd.ExcelWriter("./database/InstagramFollowerData.xlsx", engine="xlsxwriter")
   df.to_excel(datatoexcel, sheet_name="sheet1")
   datatoexcel.save()
 

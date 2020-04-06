@@ -17,13 +17,13 @@ def createDatabase():
                      '# Post Likes': ['-'], '# of Post Comments': ['-'], 'Response to Story Question Stickers': ['See Following columns']
                      })
   datatoexcel = pd.ExcelWriter(
-      "/Users/Tanner/code/products/Instagram/database/InstagramStickerResponseData.xlsx", engine="xlsxwriter")
+      "/Users/Tanner/code/products/Instagram/turtlecreeklane/database/InstagramStickerResponseData.xlsx", engine="xlsxwriter")
   df.to_excel(datatoexcel, sheet_name="sheet1")
   datatoexcel.save()
 
 def populateDatabase(name, stickerQuestion, response):
   df = pd.read_excel(
-      '/Users/Tanner/code/products/Instagram/database/InstagramStickerResponseData.xlsx', index_col=[0])
+      '/Users/Tanner/code/products/Instagram/turtlecreeklane/database/InstagramStickerResponseData.xlsx', index_col=[0])
 
   foundIGHandle = df[df['IG Handle'].str.contains(name)]
   IGHandlecount = foundIGHandle.count()[-1]
@@ -37,7 +37,7 @@ def populateDatabase(name, stickerQuestion, response):
   df = df.append(df2, ignore_index=True)
 
   datatoexcel = pd.ExcelWriter(
-      "/Users/Tanner/code/products/Instagram/database/InstagramStickerResponseData.xlsx", engine="xlsxwriter")
+      "/Users/Tanner/code/products/Instagram/turtlecreeklane/database/InstagramStickerResponseData.xlsx", engine="xlsxwriter")
   df.to_excel(datatoexcel, sheet_name="sheet1")
   datatoexcel.save()
 
@@ -64,30 +64,30 @@ def createSubImages(picture):
       (0, (rightSide.height - (.97 * (rightSide.height / 4))), rightSide.width, (rightSide.height)))
 
   leftTop.save(
-      f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+      f"/Users/Tanner/code/products/Instagram/turtlecreeklane/croppedImages/{uuid.uuid1()}.jpg")
   leftUpper.save(
-      f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+      f"/Users/Tanner/code/products/Instagram/turtlecreeklane/croppedImages/{uuid.uuid1()}.jpg")
   leftLower.save(
-      f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+      f"/Users/Tanner/code/products/Instagram/turtlecreeklane/croppedImages/{uuid.uuid1()}.jpg")
   leftBottom.save(
-      f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+      f"/Users/Tanner/code/products/Instagram/turtlecreeklane/croppedImages/{uuid.uuid1()}.jpg")
 
   rightTop.save(
-      f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+      f"/Users/Tanner/code/products/Instagram/turtlecreeklane/croppedImages/{uuid.uuid1()}.jpg")
   rightUpper.save(
-      f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+      f"/Users/Tanner/code/products/Instagram/turtlecreeklane/croppedImages/{uuid.uuid1()}.jpg")
   rightLower.save(
-    f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+    f"/Users/Tanner/code/products/Instagram/turtlecreeklane/croppedImages/{uuid.uuid1()}.jpg")
   rightBottom.save(
-    f"/Users/Tanner/code/products/Instagram/croppedImages/{uuid.uuid1()}.jpg")
+    f"/Users/Tanner/code/products/Instagram/turtlecreeklane/croppedImages/{uuid.uuid1()}.jpg")
 
 def populate():
   count = 0
-  for filepath in glob.iglob('/Users/Tanner/code/products/Instagram/croppedImages/*'):
+  for filepath in glob.iglob('/Users/Tanner/code/products/Instagram/turtlecreeklane/croppedImages/*'):
     count = count + 1
 
     lengthOfDir = 0
-    for name in os.listdir('../croppedImages'):
+    for name in os.listdir('./croppedImages'):
       lengthOfDir = lengthOfDir + 1
 
     print(str(round((count/lengthOfDir*100), 2)) + "%" + " Completed" )
@@ -103,16 +103,16 @@ def populate():
       newText = str("".join(textBody))
       newTextWithoutReply = newText.split('Reply')[0]
 
-      if (os.path.exists('/Users/Tanner/code/products/Instagram/database/InstagramStickerResponseData.xlsx') == False):
+      if (os.path.exists('/Users/Tanner/code/products/Instagram/turtlecreeklane/database/InstagramStickerResponseData.xlsx') == False):
         createDatabase()
         print('the database exists')
       populateDatabase(username, 'Add Question', newTextWithoutReply)
 
 def clearCache(folder):
   if (folder == "cropped"):
-    path = '/Users/Tanner/code/products/Instagram/croppedImages'
+    path = '/Users/Tanner/code/products/Instagram/turtlecreeklane/croppedImages'
   elif (folder == "uncropped"):
-    path = '/Users/Tanner/code/products/Instagram/uncroppedImages'
+    path = '/Users/Tanner/code/products/Instagram/turtlecreeklane/uncroppedImages'
     
   for filename in os.listdir(path):
     file_path = os.path.join(path, filename)
@@ -125,8 +125,8 @@ def clearCache(folder):
       print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 def prepareToRun():
-  for filename in os.listdir('/Users/Tanner/code/products/Instagram/uncroppedImages'):
-    image_file = os.path.join('/Users/Tanner/code/products/Instagram/uncroppedImages', filename)
+  for filename in os.listdir('/Users/Tanner/code/products/Instagram/turtlecreeklane/uncroppedImages'):
+    image_file = os.path.join('/Users/Tanner/code/products/Instagram/turtlecreeklane/uncroppedImages', filename)
     createSubImages(f"{image_file}")
   
   populate()

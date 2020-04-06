@@ -31,7 +31,7 @@ def stickers():
 
     for pic in uploads:
       filename = pic.filename.split(".")[0] + '.jpg'
-      saved_name = os.path.join("/Users/Tanner/code/products/Instagram/uncroppedImages/", filename)
+      saved_name = os.path.join("/Users/Tanner/code/products/Instagram/turtlecreeklane/uncroppedImages/", filename)
       pic.save(saved_name)
 
       image = Image.open(saved_name)

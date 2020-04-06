@@ -5,7 +5,7 @@ import tkinter as tk
 from datetime import datetime
 from dateutil.parser import parse
 
-with open('/Users/Tanner/code/products/Instagram/data.json') as f:
+with open('/Users/Tanner/code/products/Instagram/turtlecreeklane/data.json') as f:
   data = json.load(f)
 
 rawFollowers = data['followers']
@@ -32,7 +32,7 @@ prettyFollowers = json.dumps(rawWhitelistedForSponsorTaggingBy, indent=4)
 rawDismissedSuggestedUSers = data['dismissed_suggested_users']
 prettyFollowers = json.dumps(rawDismissedSuggestedUSers, indent=4)
 
-def createDatabaseAndPopulateWithFollowersDateAndTime(json_file='/Users/Tanner/code/products/Instagram/data.json'):
+def createDatabaseAndPopulateWithFollowersDateAndTime(json_file='/Users/Tanner/code/products/Instagram/turtlecreeklane/data.json'):
   with open(json_file) as f:
     data = json.load(f)
 
@@ -70,11 +70,11 @@ def createDatabaseAndPopulateWithFollowersDateAndTime(json_file='/Users/Tanner/c
     df = df.append(df1, ignore_index=True)
 
     datatoexcel = pd.ExcelWriter(
-        "/Users/Tanner/code/products/Instagram/database/InstagramFollowerData.xlsx", engine="xlsxwriter")
+        "/Users/Tanner/code/products/Instagram/turtlecreeklane/database/InstagramFollowerData.xlsx", engine="xlsxwriter")
     df.to_excel(datatoexcel, sheet_name="sheet1")
     datatoexcel.save()
 
 
 if __name__ =="__main__":
-  if (os.path.exists('/Users/Tanner/code/products/Instagram/database/InstagramFollowerData.xlsx') == False):
+  if (os.path.exists('/Users/Tanner/code/products/Instagram/turtlecreeklane/database/InstagramFollowerData.xlsx') == False):
     createDatabaseAndPopulateWithFollowersDateAndTime()
