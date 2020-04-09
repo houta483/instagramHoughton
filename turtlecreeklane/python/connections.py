@@ -5,34 +5,36 @@ import tkinter as tk
 from datetime import datetime
 from dateutil.parser import parse
 
-with open('/Users/Tanner/code/products/Instagram/data.json') as f:
-  data = json.load(f)
+# ALL THE POTENTIAL DATA WE CAN GET FROM CONNECTIONS
 
-rawFollowers = data['followers']
-prettyFollowers = json.dumps(rawFollowers, indent=4)
+# with open('/Users/Tanner/code/products/Instagram/data.json') as f:
+#   data = json.load(f)
 
-rawBlockedUsers = data['blocked_users']
-prettyFollowers = json.dumps(rawBlockedUsers, indent=4)
+# rawFollowers = data['followers']
+# prettyFollowers = json.dumps(rawFollowers, indent=4)
 
-rawRestricedUsers = data['restricted_users']
-prettyFollowers = json.dumps(rawRestricedUsers, indent=4)
+# rawBlockedUsers = data['blocked_users']
+# prettyFollowers = json.dumps(rawBlockedUsers, indent=4)
 
-rawFollowRequestsSent = data['follow_requests_sent']
-prettyFollowers = json.dumps(rawFollowRequestsSent, indent=4)
+# rawRestricedUsers = data['restricted_users']
+# prettyFollowers = json.dumps(rawRestricedUsers, indent=4)
 
-rawFolloring = data['following']
-prettyFollowers = json.dumps(rawFolloring, indent=4)
+# rawFollowRequestsSent = data['follow_requests_sent']
+# prettyFollowers = json.dumps(rawFollowRequestsSent, indent=4)
 
-rawFollowingHashtags = data['following_hashtags']
-prettyFollowers = json.dumps(rawFollowingHashtags, indent=4)
+# rawFolloring = data['following']
+# prettyFollowers = json.dumps(rawFolloring, indent=4)
 
-rawWhitelistedForSponsorTaggingBy = data['whitelisted_for_sponsor_tagging_by']
-prettyFollowers = json.dumps(rawWhitelistedForSponsorTaggingBy, indent=4)
+# rawFollowingHashtags = data['following_hashtags']
+# prettyFollowers = json.dumps(rawFollowingHashtags, indent=4)
 
-rawDismissedSuggestedUSers = data['dismissed_suggested_users']
-prettyFollowers = json.dumps(rawDismissedSuggestedUSers, indent=4)
+# rawWhitelistedForSponsorTaggingBy = data['whitelisted_for_sponsor_tagging_by']
+# prettyFollowers = json.dumps(rawWhitelistedForSponsorTaggingBy, indent=4)
 
-def createDatabaseAndPopulateWithFollowersDateAndTime(json_file='/Users/Tanner/code/products/Instagram/data.json'):
+# rawDismissedSuggestedUSers = data['dismissed_suggested_users']
+# prettyFollowers = json.dumps(rawDismissedSuggestedUSers, indent=4)
+
+def createDatabaseAndPopulateWithFollowersDateAndTime(json_file):
   with open(json_file) as f:
     data = json.load(f)
 
